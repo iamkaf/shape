@@ -4,9 +4,10 @@ import { performance } from 'node:perf_hooks';
 import { Command } from 'commander';
 import sharp from 'sharp';
 
+// The main function of this program.
 // Placeholder implementation.
 // TODO: Move to its own file.
-export async function generatePng(
+export async function generate(
   width: number,
   height: number,
   color: string,
@@ -43,7 +44,7 @@ program
 
     const outputFilename = `shape_${width}x${height}.png`;
 
-    await generatePng(width, height, color, outputFilename);
+    await generate(width, height, color, outputFilename);
 
     console.log(
       `✅ Created ${outputFilename} (${Math.floor(performance.now() - startTime)}ms)`
