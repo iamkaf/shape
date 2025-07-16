@@ -117,7 +117,7 @@ export async function generate(
   try {
     // Normalize color before generating shape
     const normalizedColor = normalizeColor(color, false);
-    
+
     // Use optimized shape generation for all shapes
     const buffer = generateShapeBuffer(shape, width, height, normalizedColor);
     await atomicWrite(outputFilename, buffer);

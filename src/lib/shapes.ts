@@ -83,23 +83,57 @@ function generateShapePixelsOptimized(
     case ShapeType.RECTANGLE:
       generateRectangleOptimized(png, width, height, rgba);
       break;
-    
+
     case ShapeType.CIRCLE:
-      generateCircleOptimized(png, width, height, centerX, centerY, Math.min(width, height) / 2, rgba);
+      generateCircleOptimized(
+        png,
+        width,
+        height,
+        centerX,
+        centerY,
+        Math.min(width, height) / 2,
+        rgba
+      );
       break;
-    
+
     case ShapeType.OVAL:
-      generateEllipseOptimized(png, width, height, centerX, centerY, width / 2, height / 2, rgba);
+      generateEllipseOptimized(
+        png,
+        width,
+        height,
+        centerX,
+        centerY,
+        width / 2,
+        height / 2,
+        rgba
+      );
       break;
-    
+
     case ShapeType.DIAMOND:
-      generateDiamondOptimized(png, width, height, centerX, centerY, Math.min(width, height) / 2, rgba);
+      generateDiamondOptimized(
+        png,
+        width,
+        height,
+        centerX,
+        centerY,
+        Math.min(width, height) / 2,
+        rgba
+      );
       break;
-    
+
     case ShapeType.DONUT:
-      generateDonutOptimized(png, width, height, centerX, centerY, Math.min(width, height) / 2, options.donutThickness || 0.4, rgba);
+      generateDonutOptimized(
+        png,
+        width,
+        height,
+        centerX,
+        centerY,
+        Math.min(width, height) / 2,
+        options.donutThickness || 0.4,
+        rgba
+      );
       break;
-    
+
     default:
       // Fall back to the original point-by-point method for complex shapes
       generateShapePixelsFallback(png, shape, width, height, rgba, options);
@@ -117,7 +151,7 @@ function generateRectangleOptimized(
 ): void {
   const data = png.data;
   const pixelSize = 4;
-  
+
   for (let y = 0; y < height; y++) {
     const rowStart = y * width * pixelSize;
     for (let x = 0; x < width; x++) {
@@ -144,14 +178,14 @@ function generateCircleOptimized(
 ): void {
   const data = png.data;
   const radiusSquared = radius * radius;
-  
+
   for (let y = 0; y < height; y++) {
     const dy = y - centerY;
     const dySquared = dy * dy;
-    
+
     for (let x = 0; x < width; x++) {
       const dx = x - centerX;
-      
+
       if (dx * dx + dySquared <= radiusSquared) {
         const idx = (width * y + x) << 2;
         data[idx] = rgba.r;
@@ -179,15 +213,15 @@ function generateEllipseOptimized(
   const data = png.data;
   const radiusXSquared = radiusX * radiusX;
   const radiusYSquared = radiusY * radiusY;
-  
+
   for (let y = 0; y < height; y++) {
     const dy = y - centerY;
     const dySquared = dy * dy;
-    
+
     for (let x = 0; x < width; x++) {
       const dx = x - centerX;
-      
-      if ((dx * dx) / radiusXSquared + (dySquared) / radiusYSquared <= 1) {
+
+      if ((dx * dx) / radiusXSquared + dySquared / radiusYSquared <= 1) {
         const idx = (width * y + x) << 2;
         data[idx] = rgba.r;
         data[idx + 1] = rgba.g;
@@ -211,13 +245,13 @@ function generateDiamondOptimized(
   rgba: { r: number; g: number; b: number; a: number }
 ): void {
   const data = png.data;
-  
+
   for (let y = 0; y < height; y++) {
     const dy = Math.abs(y - centerY);
-    
+
     for (let x = 0; x < width; x++) {
       const dx = Math.abs(x - centerX);
-      
+
       if (dx + dy <= size) {
         const idx = (width * y + x) << 2;
         data[idx] = rgba.r;
@@ -246,16 +280,19 @@ function generateDonutOptimized(
   const outerRadiusSquared = radius * radius;
   const innerRadius = radius * (1 - thickness);
   const innerRadiusSquared = innerRadius * innerRadius;
-  
+
   for (let y = 0; y < height; y++) {
     const dy = y - centerY;
     const dySquared = dy * dy;
-    
+
     for (let x = 0; x < width; x++) {
       const dx = x - centerX;
       const distanceSquared = dx * dx + dySquared;
-      
-      if (distanceSquared <= outerRadiusSquared && distanceSquared >= innerRadiusSquared) {
+
+      if (
+        distanceSquared <= outerRadiusSquared &&
+        distanceSquared >= innerRadiusSquared
+      ) {
         const idx = (width * y + x) << 2;
         data[idx] = rgba.r;
         data[idx + 1] = rgba.g;
@@ -278,7 +315,7 @@ function generateShapePixelsFallback(
   options: ShapeOptions
 ): void {
   const data = png.data;
-  
+
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
       const point: Point = { x, y };

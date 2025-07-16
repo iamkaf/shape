@@ -145,7 +145,7 @@ export function generateHeartVertices(
   resolution = 100
 ): Point[] {
   const vertices: Point[] = [];
-  
+
   // Scale factor to make heart fit within the expected size
   const scale = size / 16; // Normalize by the largest coefficient (16)
 
@@ -180,7 +180,7 @@ export function isPointInHeart(
 ): boolean {
   // Generate heart vertices using parametric equations
   const vertices = generateHeartVertices(center, size, 200);
-  
+
   // Use polygon-based point-in-polygon test
   return isPointInPolygon(point, vertices);
 }
