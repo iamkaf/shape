@@ -13,7 +13,9 @@
     "start": "bun src/index.ts",
     "format": "biome format --write ./src",
     "lint": "ultracite lint ./src",
-    "check": "biome check ./src"
+    "check": "biome check ./src",
+    "test": "bun test",
+    "test:coverage": "bun test --coverage"
   },
   "dependencies": {
     "commander": "^14.0.0",
