@@ -8,7 +8,7 @@ Shape is a command‑line tool that generates a solid colour PNG rectangle.
 - Provides a simple CLI to specify width, height, and colour.
 - Outputs a PNG file named `rectangle_<w>x<h>.png` by default.
 - Validates inputs and supports colour normalisation heuristics.
-- Includes tests written with **Vitest**.
+- Includes tests written with **Bun**.
 - Formatting and linting handled by **Biome** and **Ultracite**.
 
 ## Usage

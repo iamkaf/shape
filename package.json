@@ -4,13 +4,10 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@biomejs/biome": "^2.1.1",
+    "@biomejs/biome": "2.1.1",
     "@types/bun": "latest",
-    "ultracite": "^5.0.36",
-    "vitest": "^3.2.4"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5",
+    "ultracite": "5.0.36"
   },
   "scripts": {
     "format": "bun x biome format --write .",
