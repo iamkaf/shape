@@ -1,0 +1,10 @@
+# Exclude development and documentation files from the package
+**/tests/
+**/docs/
+.github/
+biome.json
+tsconfig.json
+bun.lock
+CONTRIBUTING.md
+
+# Node modules and build output are excluded via files field
