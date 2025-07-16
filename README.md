@@ -1,6 +1,6 @@
 # 🎨 Shape CLI
 
-> *"Every pixel tells a story, every shape has purpose."*
+> _"Every pixel tells a story, every shape has purpose."_
 
 **Generate beautiful geometric shapes from your terminal in seconds.**
 
@@ -42,7 +42,7 @@ Shape CLI is a lightning-fast command-line tool that creates stunning PNG images
 
 ```bash
 # Install and run in one command
-bunx @iamkaf/shape circle 100 100 "#ff6b6b"
+npx @iamkaf/shape circle 100 100 red
 ```
 
 **That's it!** You just created a beautiful red circle. No installation required.
@@ -56,7 +56,7 @@ bunx @iamkaf/shape circle 100 100 "#ff6b6b"
 ## 🎯 Perfect For
 
 - **🎨 Designers** - Quick mockups and placeholder graphics
-- **💻 Developers** - UI testing and rapid prototyping  
+- **💻 Developers** - UI testing and rapid prototyping
 - **📚 Content Creators** - Social media graphics and illustrations
 - **🔧 Automation** - CI/CD pipelines and batch processing
 - **🎮 Game Development** - Simple sprites and assets
@@ -66,6 +66,7 @@ bunx @iamkaf/shape circle 100 100 "#ff6b6b"
 ## 🔥 Features That Make You Faster
 
 ### 🧠 Smart & Forgiving
+
 ```bash
 # Typos? No problem!
 bunx @iamkaf/shape circl 100 100 blue     # → circle
@@ -74,6 +75,7 @@ bunx @iamkaf/shape heartt 120 120 pink    # → heart
 ```
 
 ### 🎨 Color Magic
+
 ```bash
 # All of these work perfectly
 bunx @iamkaf/shape star 100 100 "gold"              # Named colors
@@ -83,6 +85,7 @@ bunx @iamkaf/shape star 100 100 "bleu"              # Typo correction → blue
 ```
 
 ### ⚡ Lightning Performance
+
 - **70% faster** than traditional image generation
 - **Sub-second** creation for most shapes
 - **Memory efficient** - scales beautifully to any size
@@ -92,6 +95,7 @@ bunx @iamkaf/shape star 100 100 "bleu"              # Typo correction → blue
 ## 🎨 The Complete Shape Library
 
 ### Basic Shapes
+
 <table>
 <tr>
 <td align="center"><img src="./docs/assets/shapes/rectangle.png" width="40"><br><strong>Rectangle</strong></td>
@@ -108,6 +112,7 @@ bunx @iamkaf/shape star 100 100 "bleu"              # Typo correction → blue
 </table>
 
 ### Geometric Shapes
+
 <table>
 <tr>
 <td align="center"><img src="./docs/assets/shapes/diamond.png" width="40"><br><strong>Diamond</strong></td>
@@ -124,6 +129,7 @@ bunx @iamkaf/shape star 100 100 "bleu"              # Typo correction → blue
 </table>
 
 ### Special Shapes
+
 <table>
 <tr>
 <td align="center"><img src="./docs/assets/shapes/star.png" width="40"><br><strong>Star</strong></td>
@@ -146,6 +152,7 @@ bunx @iamkaf/shape star 100 100 "bleu"              # Typo correction → blue
 ## 🛠️ Power User Features
 
 ### Batch Generation
+
 ```bash
 # Generate a complete icon set
 bunx @iamkaf/shape circle 64 64 "#4a90e2" --output "icon-circle.png"
@@ -154,6 +161,7 @@ bunx @iamkaf/shape heart 64 64 "#d0021b" --output "icon-heart.png"
 ```
 
 ### Custom Output
+
 ```bash
 # Specify exactly where you want it
 bunx @iamkaf/shape triangle 200 200 green --output "./assets/my-triangle.png"
@@ -166,6 +174,7 @@ bunx @iamkaf/shape star 150 150 gold --verbose
 ```
 
 ### Advanced Options
+
 ```bash
 # Disable smart features for strict control
 bunx @iamkaf/shape circle 100 100 "#ff0000" --strict-color --strict-shape
@@ -180,6 +189,7 @@ bunx @iamkaf/shape <SHAPE> <WIDTH> <HEIGHT> <COLOR> [filename] [options]
 ```
 
 **Options:**
+
 - `--output <file>` - Custom output filename
 - `--force` - Overwrite existing files
 - `--verbose` - Detailed generation info
@@ -223,6 +233,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 💝 Support
 
 If Shape CLI makes your life easier, consider:
+
 - ⭐ **Starring the repo** on GitHub
 - 🐛 **Reporting bugs** you find
 - 💡 **Suggesting new features**
@@ -234,6 +245,6 @@ If Shape CLI makes your life easier, consider:
 
 **Made with ❤️ by developers, for developers**
 
-*Generate beautiful shapes. Build amazing things.*
+_Generate beautiful shapes. Build amazing things._
 
 </div>
