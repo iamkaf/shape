@@ -27,6 +27,6 @@ describe('cli smoke tests', () => {
   it('fails for negative width', () => {
     const outputFileName = join(tempDir, 'shape_-1x3.png');
     const result = spawnSync('bun', [cli, '-1', '3', 'red', outputFileName]);
-    expect(result.status).toBe(1);
+    expect(result.status).toBe(64);
   });
 });

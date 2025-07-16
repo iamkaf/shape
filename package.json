@@ -19,6 +19,12 @@
   },
   "dependencies": {
     "commander": "^14.0.0",
-    "sharp": "^0.34.3"
+    "sharp": "^0.34.3",
+    "validate-color": "^2.2.4",
+    "colord": "^2.9.3",
+    "didyoumean2": "^7.0.4",
+    "fastest-levenshtein": "^1.0.16",
+    "css-color-names": "^1.0.1",
+    "pngjs": "^7.0.0"
   }
 }
