@@ -44,8 +44,9 @@
     "format": "biome format --write ./src",
     "lint": "ultracite lint ./src",
     "check": "biome check ./src",
-    "test": "bun test",
-    "test:coverage": "bun test --coverage"
+    "test": "bun test tests/unit tests/integration tests/cli tests/index.test.ts tests/memory.test.ts",
+    "test:coverage": "bun test --coverage",
+    "test:bench": "bun test tests/benchmark.test.ts"
   },
   "dependencies": {
     "commander": "^14.0.0",
