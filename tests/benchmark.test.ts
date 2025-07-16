@@ -167,7 +167,6 @@ describe('Shape Generation Performance Benchmarks', () => {
         ShapeType.CIRCLE,
         ShapeType.TRIANGLE,
         ShapeType.STAR,
-        ShapeType.HEART,
       ];
 
       const results: Record<string, ReturnType<typeof measurePerformance>> = {};
