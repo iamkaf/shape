@@ -10,8 +10,12 @@
     "ultracite": "5.0.36"
   },
   "scripts": {
-    "format": "bun x biome format --write .",
-    "lint": "bun x ultracite lint",
-    "test": "bun test"
+    "start": "bun src/index.ts",
+    "format": "biome format --write ./src",
+    "lint": "ultracite lint ./src",
+    "check": "biome check ./src"
+  },
+  "dependencies": {
+    "commander": "^14.0.0"
   }
 }

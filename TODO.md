@@ -3,15 +3,15 @@
 This file tracks the high level phases for building Shape CLI. Each phase delivers a usable increment.
 
 ## Phase 1 – Setup
-- Initialize repository with Bun and TypeScript.
-- Configure Biome and Ultracite.
-- Add Vitest for testing.
-- Establish directory structure (`src/`, `tests/`).
+- [x] Initialize repository with Bun and TypeScript.
+- [x] Configure Biome and Ultracite.
+- [x] Add Vitest for testing.
+- [x] Establish directory structure (`src/`, `tests/`).
 
 ## Phase 2 – Tracer Bullet
-- Implement a minimal end-to-end CLI that accepts width, height, and colour.
-- Hardcode PNG generation with a single colour as placeholder.
-- Provide basic argument parsing and file output.
+- [x] Implement a minimal end-to-end CLI that accepts width, height, and colour.
+- [x] Hardcode PNG generation with a single colour as placeholder.
+- [x] Provide basic argument parsing and file output.
 
 ## Phase 3 – Testing Suite
 - Add a **complete** well organized suite of unit tests.
