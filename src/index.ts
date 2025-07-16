@@ -36,13 +36,14 @@ program
   .argument('<width>', 'width in pixels')
   .argument('<height>', 'height in pixels')
   .argument('<color>', 'any valid CSS colour string')
-  .action(async (widthStr, heightStr, color) => {
+  .argument('[outputFilename]', 'optional output filename')
+  .action(async (widthStr, heightStr, color, outputFilenameArg) => {
     const startTime = performance.now();
 
     const width = Number.parseInt(widthStr, 10);
     const height = Number.parseInt(heightStr, 10);
 
-    const outputFilename = `shape_${width}x${height}.png`;
+    const outputFilename = outputFilenameArg || `shape_${width}x${height}.png`;
 
     await generate(width, height, color, outputFilename);
 

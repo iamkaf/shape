@@ -1,4 +1,4 @@
 // TODO: implement colour normalisation heuristics
-export function normalizeColor(input: string, strict = false): string {
+export function normalizeColor(input: string, _strict = false): string {
   return input;
 }
