@@ -2,7 +2,7 @@
 
 ## 1. Purpose & Scope
 
-RectGen is a command‑line program that generates a solid‑colour PNG rectangle given width, height, and colour parameters. It is intended for scripts, CI pipelines, and local tooling where programmatic placeholder images are needed. Non‑goals: gradients, text rendering, graphical UI.
+Shape is a command‑line program that generates a solid‑colour PNG rectangle given width, height, and colour parameters. It is intended for scripts, CI pipelines, and local tooling where programmatic placeholder images are needed. Non‑goals: gradients, text rendering, graphical UI.
 
 ## 2. Functional Requirements
 
