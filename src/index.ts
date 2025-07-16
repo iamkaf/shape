@@ -1,7 +1,28 @@
 #!/usr/bin/env bun
 
-import fs from 'node:fs';
+import { performance } from 'node:perf_hooks';
 import { Command } from 'commander';
+import sharp from 'sharp';
+
+// Placeholder implementation.
+// TODO: Move to its own file.
+export async function generatePng(
+  width: number,
+  height: number,
+  color: string,
+  outputFilename: string
+): Promise<void> {
+  await sharp({
+    create: {
+      width,
+      height,
+      channels: 4,
+      background: color,
+    },
+  })
+    .png()
+    .toFile(outputFilename);
+}
 
 const program = new Command();
 
@@ -14,21 +35,22 @@ program
   .argument('<width>', 'width in pixels')
   .argument('<height>', 'height in pixels')
   .argument('<color>', 'any valid CSS colour string')
-  .action((width, height, _color) => {
+  .action(async (widthStr, heightStr, color) => {
+    const startTime = performance.now();
+
+    const width = Number.parseInt(widthStr, 10);
+    const height = Number.parseInt(heightStr, 10);
+
     const outputFilename = `shape_${width}x${height}.png`;
 
-    // Placeholder 1x1 red pixel PNG
-    const pngBuffer = Buffer.from([
-      0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d,
-      0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
-      0x08, 0x02, 0x00, 0x00, 0x00, 0x90, 0x77, 0x53, 0xde, 0x00, 0x00, 0x00,
-      0x0c, 0x49, 0x44, 0x41, 0x54, 0x18, 0x57, 0x63, 0xf8, 0xff, 0xff, 0xff,
-      0x3f, 0x00, 0x05, 0xfe, 0x02, 0xfe, 0xdc, 0xcc, 0x59, 0xe7, 0x00, 0x00,
-      0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae, 0x42, 0x60, 0x82,
-    ]);
+    await generatePng(width, height, color, outputFilename);
 
-    fs.writeFileSync(outputFilename, pngBuffer);
-    console.log(`✅ Created ${outputFilename}`);
+    console.log(
+      `✅ Created ${outputFilename} (${Math.floor(performance.now() - startTime)}ms)`
+    );
   });
 
-program.parse(process.argv);
+// Only parse arguments if this file is run directly
+if (import.meta.main) {
+  program.parse(process.argv);
+}
