@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "Ultracite": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://www.ultracite.ai/api/mcp/http"
+      ],
+      "env": {}
+    }
+  }
+}
