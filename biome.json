@@ -9,7 +9,8 @@
     "enabled": true,
     "rules": {
       "suspicious": {
-        "noConsole": "off"
+        "noConsole": "off",
+        "noExplicitAny": "off"
       },
       "nursery": {
         "noBitwiseOperators": "off"
@@ -27,5 +28,7 @@
       }
     }
   },
-  "extends": ["ultracite"]
+  "extends": [
+    "ultracite"
+  ]
 }

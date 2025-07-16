@@ -303,9 +303,9 @@ export function hexToRgba(hex: string): RGBAColor {
   }
 
   return {
-    r: Number.parseInt(result[1], 16),
-    g: Number.parseInt(result[2], 16),
-    b: Number.parseInt(result[3], 16),
+    r: Number.parseInt(result[1] as string, 16),
+    g: Number.parseInt(result[2] as string, 16),
+    b: Number.parseInt(result[3] as string, 16),
     a: 255,
   };
 }

@@ -202,7 +202,7 @@ describe('geometry module', () => {
       const center: Point = { x: 0, y: 0 };
       const vertices = generateRegularPolygon(center, 10, 3);
       expect(vertices).toHaveLength(3);
-      
+
       // Check that all vertices are approximately 10 units from center
       for (const vertex of vertices) {
         expect(distance(vertex, center)).toBeCloseTo(10, 5);
@@ -213,7 +213,7 @@ describe('geometry module', () => {
       const center: Point = { x: 5, y: 5 };
       const vertices = generateRegularPolygon(center, 5, 4);
       expect(vertices).toHaveLength(4);
-      
+
       // Check that all vertices are approximately 5 units from center
       for (const vertex of vertices) {
         expect(distance(vertex, center)).toBeCloseTo(5, 5);
@@ -224,7 +224,7 @@ describe('geometry module', () => {
       const center: Point = { x: 0, y: 0 };
       const vertices = generateRegularPolygon(center, 8, 6);
       expect(vertices).toHaveLength(6);
-      
+
       // Check that all vertices are approximately 8 units from center
       for (const vertex of vertices) {
         expect(distance(vertex, center)).toBeCloseTo(8, 5);
@@ -235,7 +235,7 @@ describe('geometry module', () => {
       const center: Point = { x: 0, y: 0 };
       const vertices1 = generateRegularPolygon(center, 10, 4, 0);
       const vertices2 = generateRegularPolygon(center, 10, 4, Math.PI / 4);
-      
+
       // Vertices should be different with rotation
       expect(vertices1[0]).not.toEqual(vertices2[0]);
     });
@@ -257,11 +257,15 @@ describe('geometry module', () => {
     it('alternates between outer and inner radius', () => {
       const center: Point = { x: 0, y: 0 };
       const vertices = generateStar(center, 10, 4, 5);
-      
+
+      // this makes the compiler happy
+      const firstVertex: Point = vertices[0] as Point;
+      const secondVertex: Point = vertices[1] as Point;
+
       // First vertex should be at outer radius
-      expect(distance(vertices[0], center)).toBeCloseTo(10, 5);
+      expect(distance(firstVertex, center)).toBeCloseTo(10, 5);
       // Second vertex should be at inner radius
-      expect(distance(vertices[1], center)).toBeCloseTo(4, 5);
+      expect(distance(secondVertex, center)).toBeCloseTo(4, 5);
     });
   });
 
@@ -269,7 +273,7 @@ describe('geometry module', () => {
     it('generates arrow vertices pointing right', () => {
       const vertices = generateArrowVertices(100, 60, 'right');
       expect(vertices).toHaveLength(7);
-      
+
       // Arrow should have valid numeric vertices
       for (const vertex of vertices) {
         expect(typeof vertex.x).toBe('number');
@@ -282,7 +286,7 @@ describe('geometry module', () => {
     it('generates arrow vertices pointing left', () => {
       const vertices = generateArrowVertices(100, 60, 'left');
       expect(vertices).toHaveLength(7);
-      
+
       // Arrow should have valid numeric vertices
       for (const vertex of vertices) {
         expect(typeof vertex.x).toBe('number');
@@ -295,7 +299,7 @@ describe('geometry module', () => {
     it('generates arrow vertices pointing up', () => {
       const vertices = generateArrowVertices(60, 100, 'up');
       expect(vertices).toHaveLength(7);
-      
+
       // Arrow transformations may extend beyond strict bounds due to rotation
       // Just verify we have valid vertices
       for (const vertex of vertices) {
@@ -309,7 +313,7 @@ describe('geometry module', () => {
     it('generates arrow vertices pointing down', () => {
       const vertices = generateArrowVertices(60, 100, 'down');
       expect(vertices).toHaveLength(7);
-      
+
       // Arrow transformations may extend beyond strict bounds due to rotation
       // Just verify we have valid vertices
       for (const vertex of vertices) {
@@ -351,7 +355,9 @@ describe('geometry module', () => {
     });
 
     it('throws error for long hex color', () => {
-      expect(() => hexToRgba('#ff00000')).toThrow('Invalid hex color: #ff00000');
+      expect(() => hexToRgba('#ff00000')).toThrow(
+        'Invalid hex color: #ff00000'
+      );
     });
   });
 });

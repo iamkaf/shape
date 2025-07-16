@@ -121,7 +121,7 @@ export async function generate(
     // Use optimized shape generation for all shapes
     const buffer = generateShapeBuffer(shape, width, height, normalizedColor);
     await atomicWrite(outputFilename, buffer);
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(`Failed to generate PNG: ${error.message}`);
   }
 }
@@ -187,7 +187,7 @@ program
 
         const duration = Math.floor(performance.now() - startTime);
         console.log(`✅ Created ${args.outputFilename} (${duration}ms)`);
-      } catch (error) {
+      } catch (error: any) {
         console.error(error.message);
 
         // Determine exit code based on error type
