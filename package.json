@@ -1,5 +1,5 @@
 {
-  "name": "shape",
+  "name": "@iamkaf/shape",
   "module": "src/index.ts",
   "type": "module",
   "private": true,
