@@ -13,23 +13,24 @@ This file tracks the high level phases for building Shape CLI. Each phase delive
 - Hardcode PNG generation with a single colour as placeholder.
 - Provide basic argument parsing and file output.
 
-## Phase 3 – Input Validation
+## Phase 3 – Testing Suite
+- Add a **complete** well organized suite of unit tests.
+- Add a comprehensive suite of end-to-end tests.
+- Add CLI smoke tests.
+- Setup code coverage.
+
+## Phase 4 – Input Validation
 - Enforce dimension limits and positive integers.
 - Implement colour normalisation heuristics.
 - Support `--strict-color` mode.
 
-## Phase 4 – PNG Generation
+## Phase 5 – PNG Generation
 - Replace placeholder with real image creation using `sharp` (primary) and `pngjs` fallback.
 - Ensure atomic file writing.
 
-## Phase 5 – CLI Flags and Error Handling
+## Phase 6 – CLI Flags and Error Handling
 - Add `--output`, `--force`, `--verbose`, and `--help` flags.
 - Implement exit codes per PRD.
-
-## Phase 6 – Testing Suite
-- Add unit tests for colour normalisation and validation.
-- Add golden tests for PNG output.
-- Add CLI smoke tests.
 
 ## Phase 7 – Documentation
 - Update README with detailed usage and examples.
