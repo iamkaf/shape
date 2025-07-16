@@ -147,7 +147,7 @@ export function generateHeartVertices(
   const vertices: Point[] = [];
 
   // Scale factor to make heart fit within the expected size
-  const scale = size / 16; // Normalize by the largest coefficient (16)
+  const scale = size / 8; // Normalize by the largest coefficient (16)
 
   for (let i = 0; i < resolution; i++) {
     const t = (i / resolution) * 2 * Math.PI;
