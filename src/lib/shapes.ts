@@ -328,7 +328,7 @@ function isPointInShape(
       );
 
     case ShapeType.HEART:
-      return isPointInHeart(point, center, Math.min(width, height) / 16);
+      return isPointInHeart(point, center, Math.min(width, height) / 4);
 
     case ShapeType.DIAMOND:
       return isPointInDiamond(point, center, Math.min(width, height) / 2);

@@ -145,14 +145,17 @@ export function generateHeartVertices(
   resolution = 100
 ): Point[] {
   const vertices: Point[] = [];
+  
+  // Scale factor to make heart fit within the expected size
+  const scale = size / 16; // Normalize by the largest coefficient (16)
 
   for (let i = 0; i < resolution; i++) {
     const t = (i / resolution) * 2 * Math.PI;
 
-    // Parametric heart equation
-    const x = size * (16 * Math.sin(t) ** 3);
+    // Parametric heart equation with proper scaling
+    const x = scale * (16 * Math.sin(t) ** 3);
     const y =
-      size *
+      scale *
       (13 * Math.cos(t) -
         5 * Math.cos(2 * t) -
         2 * Math.cos(3 * t) -
@@ -168,23 +171,18 @@ export function generateHeartVertices(
 }
 
 /**
- * Check if point is inside heart shape using distance approximation
+ * Check if point is inside heart shape using parametric equation vertices
  */
 export function isPointInHeart(
   point: Point,
   center: Point,
   size: number
 ): boolean {
-  const dx = (point.x - center.x) / size;
-  const dy = (center.y - point.y) / size; // Flip Y coordinate
-
-  // Heart equation: ((x^2 + y^2 - 1)^3) - (x^2 * y^3) <= 0
-  const x2 = dx * dx;
-  const y2 = dy * dy;
-  const left = (x2 + y2 - 1) ** 3;
-  const right = x2 * dy * dy * dy;
-
-  return left - right <= 0;
+  // Generate heart vertices using parametric equations
+  const vertices = generateHeartVertices(center, size, 200);
+  
+  // Use polygon-based point-in-polygon test
+  return isPointInPolygon(point, vertices);
 }
 
 /**
