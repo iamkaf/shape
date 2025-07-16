@@ -3,7 +3,7 @@ import namesPlugin from 'colord/plugins/names';
 import colorNames from 'css-color-names';
 import didYouMean from 'didyoumean2';
 import { distance } from 'fastest-levenshtein';
-import validateColor from 'validate-color';
+import { validateHTMLColor as validateColor } from 'validate-color';
 
 // Extend colord with names plugin to support CSS color names
 extend([namesPlugin]);

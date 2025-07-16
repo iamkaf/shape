@@ -24,34 +24,34 @@ This file tracks the high level phases for building Shape CLI. Each phase delive
 
 ## Phase 4 – Input Validation
 
-- Enforce dimension limits and positive integers.
-- Implement colour normalisation heuristics.
-- Support `--strict-color` mode.
+- [x] Enforce dimension limits and positive integers.
+- [x] Implement colour normalisation heuristics.
+- [x] Support `--strict-color` mode.
 
 ## Phase 5 – PNG Generation
 
-- Replace placeholder with real image creation using `sharp` (primary) and `pngjs` fallback.
-- Ensure atomic file writing.
+- [x] Replace placeholder with real image creation using `sharp` (primary) and `pngjs` fallback.
+- [x] Ensure atomic file writing.
 
 ## Phase 6 – CLI Flags and Error Handling
 
-- Add `--output`, `--force`, `--verbose`, and `--help` flags.
-- Implement exit codes per PRD.
+- [x] Add `--output`, `--force`, `--verbose`, and `--help` flags.
+- [x] Implement exit codes per PRD.
 
 ## Phase 7 – Documentation
 
-- Update README with detailed usage and examples.
-- Document development workflow and contribution guide.
+- [x] Update README with detailed usage and examples.
+- [x] Document development workflow and contribution guide.
 
 ## Phase 8 – Optimisations
 
-- Improve performance for large images.
-- Review memory usage and refine implementation.
+- [x] Improve performance for large images.
+- [x] Review memory usage and refine implementation.
 
 ## Phase 9 – Packaging
 
-- Prepare for distribution on npm under `@iamkaf/shape`.
-- Create CLIs for `bunx` usage and bundling steps.
+- [x] Prepare for distribution on npm under `@iamkaf/shape`.
+- [x] Create CLIs for `bunx` usage and bundling steps.
 
 ## Phase 10 – Cleanup and Publishing
 

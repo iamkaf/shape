@@ -1,8 +1,32 @@
 {
   "name": "@iamkaf/shape",
-  "module": "src/index.ts",
+  "version": "1.0.0",
+  "description": "A command-line tool that generates solid color PNG images with support for 13 different geometric shapes",
   "type": "module",
-  "private": true,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "bin": {
+    "shape": "dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "keywords": ["cli", "png", "shapes", "graphics", "geometry", "image-generation"],
+  "author": "iamkaf",
+  "license": "MIT",
+  "homepage": "https://github.com/iamkaf/shape#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamkaf/shape.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iamkaf/shape/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "private": false,
   "devDependencies": {
     "@biomejs/biome": "2.1.1",
     "@types/bun": "latest",
@@ -11,6 +35,11 @@
   },
   "scripts": {
     "start": "bun src/index.ts",
+    "build": "bun build src/index.ts --outfile=dist/index.js --target=node && echo '#!/usr/bin/env node' > dist/index.tmp && tail -n +2 dist/index.js >> dist/index.tmp && mv dist/index.tmp dist/index.js && chmod +x dist/index.js",
+    "build:bundle": "bun build src/index.ts --outfile=dist/index.js --target=node --minify",
+    "build:clean": "rm -rf dist",
+    "prebuild": "npm run build:clean",
+    "prepublishOnly": "npm run build && npm run test",
     "format": "biome format --write ./src",
     "lint": "ultracite lint ./src",
     "check": "biome check ./src",
@@ -19,7 +48,6 @@
   },
   "dependencies": {
     "commander": "^14.0.0",
-    "sharp": "^0.34.3",
     "validate-color": "^2.2.4",
     "colord": "^2.9.3",
     "didyoumean2": "^7.0.4",

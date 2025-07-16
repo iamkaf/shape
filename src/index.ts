@@ -1,60 +1,128 @@
 #!/usr/bin/env bun
 
 import { performance } from 'node:perf_hooks';
-import { colord } from 'colord';
 import { Command } from 'commander';
-import { PNG } from 'pngjs';
-import sharp from 'sharp';
+// Sharp import removed - using optimized shape generation instead
 import { normalizeColor } from './lib/color.js';
 import { parseDimensions } from './lib/dimensions.js';
 import { atomicWrite, fileExists } from './lib/file.js';
+import {
+  generateShapeBuffer,
+  getDefaultFilename,
+  ShapeType,
+} from './lib/shapes.js';
+import {
+  getShapeValidationHelp,
+  looksLikeShapeName,
+  parseShapeName,
+  validateShapeDimensions,
+} from './lib/shapeValidation.js';
+
+const NUMERIC_REGEX = /^\d+$/;
+
+interface ParsedCliArgs {
+  shape: ShapeType;
+  width: number;
+  height: number;
+  color: string;
+  outputFilename: string;
+}
+
+async function parseCliArguments(
+  shapeArg: string,
+  widthArg: string,
+  heightArg: string,
+  colorArg: string,
+  outputFilenameArg: string | undefined,
+  options: {
+    strictShape?: boolean;
+    strictColor?: boolean;
+    verbose?: boolean;
+    output?: string;
+  }
+): Promise<ParsedCliArgs> {
+  // Handle backward compatibility
+  let shape: ShapeType;
+  let widthStr: string;
+  let heightStr: string;
+  let color: string;
+  let outputFilename: string | undefined;
+
+  const firstArgIsNumber = NUMERIC_REGEX.test(shapeArg);
+
+  if (firstArgIsNumber && !looksLikeShapeName(shapeArg)) {
+    // Old format: WIDTH HEIGHT COLOR [outputFilename]
+    console.warn(
+      '⚠️  Deprecated: Using old format. New format: shape <shape> <width> <height> <color>'
+    );
+    shape = ShapeType.RECTANGLE;
+    widthStr = shapeArg;
+    heightStr = widthArg;
+    color = heightArg;
+    outputFilename = colorArg;
+  } else {
+    // New format: SHAPE WIDTH HEIGHT COLOR [outputFilename]
+    shape = parseShapeName(shapeArg, options.strictShape);
+    widthStr = widthArg;
+    heightStr = heightArg;
+    color = colorArg;
+    outputFilename = outputFilenameArg;
+  }
+
+  // Parse and validate dimensions
+  const { width, height } = parseDimensions(widthStr, heightStr);
+
+  // Validate shape dimensions
+  const dimensionValidation = await validateShapeDimensions(
+    shape,
+    width,
+    height
+  );
+  if (!dimensionValidation.isValid) {
+    throw new Error(dimensionValidation.warnings.join(' '));
+  }
+
+  // Show dimension warnings in verbose mode
+  if (options.verbose && dimensionValidation.warnings.length > 0) {
+    for (const warning of dimensionValidation.warnings) {
+      console.warn(`⚠️  ${warning}`);
+    }
+  }
+
+  // Normalize color
+  const normalizedColor = normalizeColor(color, options.strictColor);
+
+  // Determine output filename
+  const finalOutputFilename =
+    options.output ||
+    outputFilename ||
+    getDefaultFilename(shape, width, height);
+
+  return {
+    shape,
+    width,
+    height,
+    color: normalizedColor,
+    outputFilename: finalOutputFilename,
+  };
+}
 
 export async function generate(
+  shape: ShapeType,
   width: number,
   height: number,
   color: string,
   outputFilename: string
 ): Promise<void> {
   try {
-    // Try Sharp first (primary PNG encoder)
-    const buffer = await sharp({
-      create: {
-        width,
-        height,
-        channels: 4,
-        background: color,
-      },
-    })
-      .png()
-      .toBuffer();
-
+    // Normalize color before generating shape
+    const normalizedColor = normalizeColor(color, false);
+    
+    // Use optimized shape generation for all shapes
+    const buffer = generateShapeBuffer(shape, width, height, normalizedColor);
     await atomicWrite(outputFilename, buffer);
-  } catch (_sharpError) {
-    try {
-      // Fallback to pngjs if Sharp fails
-      console.warn('Sharp failed, falling back to pngjs');
-
-      const png = new PNG({ width, height });
-      const colorObj = colord(color);
-      const rgba = colorObj.toRgb();
-
-      // Fill the PNG buffer with the color
-      for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-          const idx = (width * y + x) << 2;
-          png.data[idx] = rgba.r; // Red
-          png.data[idx + 1] = rgba.g; // Green
-          png.data[idx + 2] = rgba.b; // Blue
-          png.data[idx + 3] = 255; // Alpha (fully opaque)
-        }
-      }
-
-      const buffer = PNG.sync.write(png);
-      await atomicWrite(outputFilename, buffer);
-    } catch (fallbackError) {
-      // Both Sharp and pngjs failed - this is an I/O error
-      throw new Error(`Failed to generate PNG: ${fallbackError.message}`);
-    }
+  } catch (error) {
+    throw new Error(`Failed to generate PNG: ${error.message}`);
   }
 }
 
@@ -62,10 +130,9 @@ const program = new Command();
 
 program
   .name('shape')
-  .description(
-    'A command-line tool that generates a solid colour PNG rectangle.'
-  )
+  .description('A command-line tool that generates solid colour PNG shapes.')
   .version('0.0.1')
+  .argument('<shape>', 'shape type (rectangle, circle, triangle, star, etc.)')
   .argument('<width>', 'width in pixels')
   .argument('<height>', 'height in pixels')
   .argument('<color>', 'any valid CSS colour string')
@@ -74,53 +141,72 @@ program
   .option('-f, --force', 'overwrite existing files')
   .option('-v, --verbose', 'detailed output')
   .option('-s, --strict-color', 'disable color normalization')
-  .action(async (widthStr, heightStr, color, outputFilenameArg, options) => {
-    const startTime = performance.now();
+  .option('--strict-shape', 'disable shape name fuzzy matching')
+  .addHelpText('after', `\n${getShapeValidationHelp()}`)
+  .action(
+    async (
+      shapeArg,
+      widthArg,
+      heightArg,
+      colorArg,
+      outputFilenameArg,
+      options
+    ) => {
+      const startTime = performance.now();
 
-    try {
-      // Parse and validate dimensions
-      const { width, height } = parseDimensions(widthStr, heightStr);
-
-      // Normalize color
-      const normalizedColor = normalizeColor(color, options.strictColor);
-
-      // Determine output filename
-      const outputFilename =
-        options.output || outputFilenameArg || `shape_${width}x${height}.png`;
-
-      // Check if file exists and handle force flag
-      if ((await fileExists(outputFilename)) && !options.force) {
-        console.error('File exists. Use --force to overwrite.');
-        process.exit(64);
-      }
-
-      if (options.verbose) {
-        console.log(
-          `Generating ${width}x${height} PNG with color ${normalizedColor}`
+      try {
+        const args = await parseCliArguments(
+          shapeArg,
+          widthArg,
+          heightArg,
+          colorArg,
+          outputFilenameArg,
+          options
         );
-        console.log(`Output: ${outputFilename}`);
-      }
 
-      await generate(width, height, normalizedColor, outputFilename);
+        // Check if file exists and handle force flag
+        if ((await fileExists(args.outputFilename)) && !options.force) {
+          console.error('File exists. Use --force to overwrite.');
+          process.exit(64);
+        }
 
-      const duration = Math.floor(performance.now() - startTime);
-      console.log(`✅ Created ${outputFilename} (${duration}ms)`);
-    } catch (error) {
-      console.error(error.message);
+        if (options.verbose) {
+          console.log(
+            `Generating ${args.shape} ${args.width}x${args.height} PNG with color ${args.color}`
+          );
+          console.log(`Output: ${args.outputFilename}`);
+        }
 
-      // Determine exit code based on error type
-      if (
-        error.message.includes('Width and height must be positive integers') ||
-        error.message.includes('Dimension too large') ||
-        error.message.includes('Invalid colour') ||
-        error.message.includes('File exists')
-      ) {
-        process.exit(64); // Usage or validation error
-      } else {
-        process.exit(74); // I/O or encode error
+        await generate(
+          args.shape,
+          args.width,
+          args.height,
+          args.color,
+          args.outputFilename
+        );
+
+        const duration = Math.floor(performance.now() - startTime);
+        console.log(`✅ Created ${args.outputFilename} (${duration}ms)`);
+      } catch (error) {
+        console.error(error.message);
+
+        // Determine exit code based on error type
+        if (
+          error.message.includes(
+            'Width and height must be positive integers'
+          ) ||
+          error.message.includes('Dimension too large') ||
+          error.message.includes('Invalid colour') ||
+          error.message.includes('Invalid shape') ||
+          error.message.includes('File exists')
+        ) {
+          process.exit(64); // Usage or validation error
+        } else {
+          process.exit(74); // I/O or encode error
+        }
       }
     }
-  });
+  );
 
 // Only parse arguments if this file is run directly
 if (import.meta.main) {

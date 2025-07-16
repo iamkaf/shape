@@ -13,6 +13,17 @@
       },
       "nursery": {
         "noBitwiseOperators": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": {
+          "level": "error",
+          "options": {
+            "maxAllowedComplexity": 20
+          }
+        }
+      },
+      "style": {
+        "useFilenamingConvention": "off"
       }
     }
   },
