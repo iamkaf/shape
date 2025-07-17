@@ -46,7 +46,8 @@
     "check": "biome check ./src",
     "test": "bun test tests/unit tests/integration tests/cli tests/index.test.ts tests/memory.test.ts",
     "test:coverage": "bun test --coverage",
-    "test:bench": "bun test tests/benchmark.test.ts"
+    "test:bench": "bun test tests/benchmark.test.ts",
+    "docs:images": "bun scripts/generate-docs-images.ts"
   },
   "dependencies": {
     "commander": "^14.0.0",

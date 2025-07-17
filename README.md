@@ -42,7 +42,7 @@ Shape CLI is a lightning-fast command-line tool that creates stunning PNG images
 
 ```bash
 # Install and run in one command
-npx @iamkaf/shape circle 100 100 red
+npx @iamkaf/shape circle 100 100 #FF6B6B
 ```
 
 **That's it!** You just created a beautiful red circle. No installation required.
@@ -69,9 +69,9 @@ npx @iamkaf/shape circle 100 100 red
 
 ```bash
 # Typos? No problem!
-bunx @iamkaf/shape circl 100 100 blue     # → circle
-bunx @iamkaf/shape tri 80 80 red          # → triangle
-bunx @iamkaf/shape heartt 120 120 pink    # → heart
+bunx @iamkaf/shape circl 100 100 #5B8DEE     # → circle
+bunx @iamkaf/shape tri 80 80 #FF6B6B          # → triangle
+bunx @iamkaf/shape heartt 120 120 #ED64A6    # → heart
 ```
 
 ### 🎨 Color Magic
@@ -79,8 +79,8 @@ bunx @iamkaf/shape heartt 120 120 pink    # → heart
 ```bash
 # All of these work perfectly
 bunx @iamkaf/shape star 100 100 "gold"              # Named colors
-bunx @iamkaf/shape star 100 100 "#ffd700"           # Hex codes
-bunx @iamkaf/shape star 100 100 "rgb(255,215,0)"    # RGB values
+bunx @iamkaf/shape star 100 100 "#ECC94B"           # Hex codes
+bunx @iamkaf/shape star 100 100 "rgb(236,201,75)"   # RGB values
 bunx @iamkaf/shape star 100 100 "bleu"              # Typo correction → blue
 ```
 
@@ -104,10 +104,10 @@ bunx @iamkaf/shape star 100 100 "bleu"              # Typo correction → blue
 <td align="center"><img src="./docs/assets/shapes/oval.png" width="40"><br><strong>Oval</strong></td>
 </tr>
 <tr>
-<td><code>rectangle 200 100 blue</code></td>
-<td><code>circle 100 100 red</code></td>
-<td><code>triangle 100 100 green</code></td>
-<td><code>oval 150 80 purple</code></td>
+<td><code>rectangle 200 100 #5B8DEE</code></td>
+<td><code>circle 100 100 #FF6B6B</code></td>
+<td><code>triangle 100 100 #4ECDC4</code></td>
+<td><code>oval 150 80 #9F7AEA</code></td>
 </tr>
 </table>
 
@@ -121,10 +121,10 @@ bunx @iamkaf/shape star 100 100 "bleu"              # Typo correction → blue
 <td align="center"><img src="./docs/assets/shapes/octagon.png" width="40"><br><strong>Octagon</strong></td>
 </tr>
 <tr>
-<td><code>diamond 100 100 gold</code></td>
-<td><code>pentagon 100 100 teal</code></td>
-<td><code>hexagon 100 100 navy</code></td>
-<td><code>octagon 100 100 coral</code></td>
+<td><code>diamond 100 100 #F6AD55</code></td>
+<td><code>pentagon 100 100 #48BB78</code></td>
+<td><code>hexagon 100 100 #667EEA</code></td>
+<td><code>octagon 100 100 #ED8936</code></td>
 </tr>
 </table>
 
@@ -139,11 +139,11 @@ bunx @iamkaf/shape star 100 100 "bleu"              # Typo correction → blue
 <td align="center"><img src="./docs/assets/shapes/donut.png" width="40"><br><strong>Donut</strong></td>
 </tr>
 <tr>
-<td><code>star 100 100 yellow</code></td>
-<td><code>heart 100 100 pink</code></td>
-<td><code>cross 100 100 black</code></td>
-<td><code>arrow 120 80 blue</code></td>
-<td><code>donut 100 100 brown</code></td>
+<td><code>star 100 100 #ECC94B</code></td>
+<td><code>heart 100 100 #ED64A6</code></td>
+<td><code>cross 100 100 #2D3748</code></td>
+<td><code>arrow 120 80 #38B2AC</code></td>
+<td><code>donut 100 100 #975A16</code></td>
 </tr>
 </table>
 
@@ -164,10 +164,10 @@ bunx @iamkaf/shape heart 64 64 "#d0021b" --output "icon-heart.png"
 
 ```bash
 # Specify exactly where you want it
-bunx @iamkaf/shape triangle 200 200 green --output "./assets/my-triangle.png"
+bunx @iamkaf/shape triangle 200 200 #4ECDC4 --output "./assets/my-triangle.png"
 
 # Force overwrite existing files
-bunx @iamkaf/shape circle 100 100 blue --force
+bunx @iamkaf/shape circle 100 100 #5B8DEE --force
 
 # Get detailed feedback
 bunx @iamkaf/shape star 150 150 gold --verbose
